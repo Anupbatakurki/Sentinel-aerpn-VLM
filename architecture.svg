@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 650" font-family="Arial, sans-serif">
+  <defs>
+    <style>
+      .box { fill: #f8f9fa; stroke: #2c3e50; stroke-width: 2; rx: 8; }
+      .arrow { stroke: #2c3e50; stroke-width: 2; fill: none; marker-end: url(#arrowhead); }
+      .label { font-size: 12px; fill: #2c3e50; text-anchor: middle; }
+      .title { font-size: 16px; font-weight: bold; fill: #2c3e50; text-anchor: middle; }
+      .subtitle { font-size: 11px; fill: #7f8c8d; text-anchor: middle; }
+      .highlight { fill: #3498db; stroke: #2980b9; }
+      .highlight-text { fill: #ffffff; font-weight: bold; }
+      .evidence { fill: #e8f4f8; stroke: #3498db; }
+      .policy { fill: #fef9e7; stroke: #f39c12; }
+      .action { fill: #eafaf1; stroke: #27ae60; }
+    </style>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#2c3e50"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="450" y="30" class="title">SENTINEL-AERPN Architecture</text>
+
+  <!-- Input -->
+  <rect x="300" y="50" width="300" height="40" class="box highlight"/>
+  <text x="450" y="75" class="highlight-text">🖼️ Image + Question</text>
+
+  <!-- Arrow -->
+  <line x1="450" y1="90" x2="450" y2="110" class="arrow"/>
+
+  <!-- Qwen -->
+  <rect x="300" y="110" width="300" height="45" class="box"/>
+  <text x="450" y="132" class="label" font-weight="bold">Qwen2.5-VL-3B</text>
+  <text x="450" y="148" class="subtitle">(LoRA-fine-tuned, frozen backbone)</text>
+
+  <!-- Arrow -->
+  <line x1="450" y1="155" x2="450" y2="175" class="arrow"/>
+
+  <!-- Evidence Models -->
+  <rect x="200" y="175" width="500" height="100" class="evidence" rx="8"/>
+  <text x="450" y="195" class="label" font-weight="bold" fill="#2980b9">Evidence Feature Models (Leakage-Free)</text>
+
+  <rect x="220" y="205" width="140" height="55" class="box" rx="4"/>
+  <text x="290" y="225" class="label" font-size="10">Answerability MLP</text>
+  <text x="290" y="240" class="subtitle" font-size="9">[G, U] → A</text>
+
+  <rect x="380" y="205" width="140" height="55" class="box" rx="4"/>
+  <text x="450" y="225" class="label" font-size="10">Risk MLP</text>
+  <text x="450" y="240" class="subtitle" font-size="9">[G, U, A] → R</text>
+
+  <rect x="540" y="205" width="140" height="55" class="box" rx="4"/>
+  <text x="610" y="225" class="label" font-size="10">Reliability Ĥ</text>
+  <text x="610" y="240" class="subtitle" font-size="9">[G, A, U, R] → Ĥ</text>
+
+  <!-- Arrow -->
+  <line x1="450" y1="275" x2="450" y2="295" class="arrow"/>
+
+  <!-- Evidence State -->
+  <rect x="200" y="295" width="500" height="45" class="policy" rx="8"/>
+  <text x="450" y="315" class="label" font-weight="bold" fill="#d68910">Evidence State Eₜ</text>
+  <text x="450" y="333" class="subtitle">[G, A, U, Ĥ, R, M, C]</text>
+
+  <!-- Arrow -->
+  <line x1="450" y1="340" x2="450" y2="360" class="arrow"/>
+
+  <!-- Policy -->
+  <rect x="300" y="360" width="300" height="45" class="policy" rx="8"/>
+  <text x="450" y="382" class="label" font-weight="bold" fill="#d68910">AERPN Policy (PPO)</text>
+  <text x="450" y="398" class="subtitle">2-layer MLP, 64 hidden units</text>
+
+  <!-- Arrow -->
+  <line x1="450" y1="405" x2="450" y2="425" class="arrow"/>
+
+  <!-- Actions -->
+  <rect x="100" y="425" width="160" height="50" class="action" rx="8"/>
+  <text x="180" y="448" class="label" font-weight="bold" fill="#27ae60">ANSWER</text>
+  <text x="180" y="465" class="subtitle">Risk-weighted reward</text>
+
+  <rect x="280" y="425" width="160" height="50" class="action" rx="8"/>
+  <text x="360" y="448" class="label" font-weight="bold" fill="#27ae60">INVESTIGATE</text>
+  <text x="360" y="465" class="subtitle">Crop + re-ground</text>
+
+  <rect x="460" y="425" width="160" height="50" class="action" rx="8"/>
+  <text x="540" y="448" class="label" font-weight="bold" fill="#27ae60">ALERT</text>
+  <text x="540" y="465" class="subtitle">High-risk warning</text>
+
+  <rect x="640" y="425" width="160" height="50" class="action" rx="8"/>
+  <text x="720" y="448" class="label" font-weight="bold" fill="#27ae60">ABSTAIN</text>
+  <text x="720" y="465" class="subtitle">Safe refusal</text>
+
+  <!-- Investigation Feedback Loop -->
+  <path d="M 360 475 L 360 510 L 450 510 L 450 405" class="arrow" stroke-dasharray="5,5"/>
+  <text x="450" y="530" class="subtitle" fill="#7f8c8d">Feedback loop: Investigate → New Evidence → Re‑decide</text>
+</svg>
