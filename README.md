@@ -960,8 +960,6 @@ The current project materials identify these related directions:
 5. **VizWiz-VQA** — assistive visual question answering benchmark.
 6. **VizWiz Answer Grounding** — grounding annotations and evaluation resource.
 
-> Before submission, replace this short list with complete, verified bibliographic entries, publication years, venues, and persistent identifiers.
-
 ---
 
 <p align="center">
